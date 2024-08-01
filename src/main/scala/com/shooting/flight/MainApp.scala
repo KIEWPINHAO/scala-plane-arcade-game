@@ -27,7 +27,7 @@ object MainApp extends JFXApp {
   }
 
   def showGame(): Unit = {
-    val gameResource = getClass.getResource("view/SkyGawwme.fxml")
+    val gameResource = getClass.getResource("view/SkyGame.fxml")
     val gameLoader = new FXMLLoader(gameResource, NoDependencyResolver)
     gameLoader.load()
     val gameRoots = gameLoader.getRoot[jfxs.layout.AnchorPane]
