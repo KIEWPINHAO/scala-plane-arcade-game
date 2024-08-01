@@ -4,5 +4,7 @@ ThisBuild / scalaVersion := "2.12.19"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "scalaFXIntro"
+    name := "Ace of the Sky"
   )
+
+
