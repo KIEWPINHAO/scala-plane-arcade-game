@@ -39,6 +39,16 @@ object MainApp extends JFXApp {
     }
   }
 
+  def showChoose(): Unit = {
+    val choose = getClass.getResource("view/ChoosePlane.fxml")
+    val loader = new FXMLLoader(choose, NoDependencyResolver)
+    loader.load()
+    val chooseRoot = loader.getRoot[jfxs.layout.AnchorPane]
+    stage.scene = new Scene {
+      root = chooseRoot
+    }
+  }
+
   def showGameHall(): Unit = {
     val hall = getClass.getResource("view/GameHall.fxml")
     val loader = new FXMLLoader(hall, NoDependencyResolver)

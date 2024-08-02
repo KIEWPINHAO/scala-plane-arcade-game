@@ -8,10 +8,9 @@ import scalafxml.core.macros.sfxml
 
 @sfxml
 class GameHallController(){
-  PlaneProperty.index = 1
 
   def getStart(): Unit = {
-    MainApp.showGame()
+    MainApp.showChoose()
   }
 
 }
