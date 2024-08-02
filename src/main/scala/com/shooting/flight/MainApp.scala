@@ -6,13 +6,12 @@ import scalafx.scene.Scene
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import javafx.{scene => jfxs}
 import scalafx.Includes._
+import scalafx.scene.image.Image
 import scalafx.scene.input.KeyEvent
 
 
 
 object MainApp extends JFXApp {
-
-  // Load the GameLobby.fxml directly
   val lobbyResource = getClass.getResource("view/GameHall.fxml")
   val loader = new FXMLLoader(lobbyResource, NoDependencyResolver)
   loader.load()
@@ -21,6 +20,7 @@ object MainApp extends JFXApp {
   // Set up the primary stage with the game lobby
   stage = new PrimaryStage {
     title = "Ace of the Sky"
+    icons += new Image(getClass.getResourceAsStream("/images/redShip.png"))
     scene = new Scene {
       root = roots
     }

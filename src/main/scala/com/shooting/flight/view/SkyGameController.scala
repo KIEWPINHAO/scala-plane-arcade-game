@@ -1,26 +1,30 @@
 package com.shooting.flight.view
 
-
-
 import com.shooting.flight.PlaneProperty
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import javafx.scene.{input => jfxsi}
 import javafx.event.EventHandler
-import scalafx.animation.AnimationTimer
+import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
+import scalafx.util.Duration
+
+import scala.util.Random
 
 
 @sfxml
 class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
 
+  //all variables listed here
   private var bullets = List[Rectangle]()
   var planeSpeed = 0
   var weaponGap = 0
-  val RedPlane = new Image("/images/redShip.png")
-  plane.image = RedPlane
+  var multipleWeapon = true
+  private val missileImage = new Image("/images/missile.gif") // Replace with your image path
+  private var missiles = List[(ImageView, Double)]()
+  private val explosionImage = new Image("/images/explode.gif")
   private var gameLoop: Option[AnimationTimer] = None
 
   initialize()
@@ -41,6 +45,23 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
     updateSpaceshipImage()
   }
 
+  def startGameLoop(): Unit = {
+    val timer = AnimationTimer(_ => {
+      updateBullets()
+      spawnMissiles()
+      updateMissiles()
+      checkCollisions()
+    })
+
+    gameLoop = Some(timer)
+    timer.start()
+  }
+
+  def stopGameLoop(): Unit = {
+    gameLoop.foreach(_.stop())
+    gameLoop = None
+  }
+
   private def updateSpaceshipImage(): Unit = {
     PlaneProperty.updateSelectedPlane()
     PlaneProperty.getSelectedPlane match {
@@ -48,6 +69,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
         plane.image = planeProperty.image
         planeSpeed = planeProperty.speed
         weaponGap = planeProperty.weaponGap
+        multipleWeapon = planeProperty.twoWeapon
     }
   }
 
@@ -95,32 +117,23 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
       layoutY = plane.layoutY.value - 10
     }
 
-    // Create the second bullet, slightly offset from the first
-    val bullet2 = new Rectangle {
-      width = 5
-      height = 10
-      fill = Color.Red
-      layoutX = plane.layoutX.value + plane.fitWidth() / 2 - 2.5 + weaponGap // Adjust offset as needed
-      layoutY = plane.layoutY.value - 10
+    bullets = bullet1 :: bullets
+    gamePane.children.add(bullet1)
+
+    if (multipleWeapon) {
+      // Create the second bullet, slightly offset from the first
+      val bullet2 = new Rectangle {
+        width = 5
+        height = 10
+        fill = Color.Red
+        layoutX = plane.layoutX.value + plane.fitWidth() / 2 - 2.5 + weaponGap // Adjust offset as needed
+        layoutY = plane.layoutY.value - 10
+      }
+
+      // Add the second bullet to the game pane and the list of bullets
+      bullets = bullet2 :: bullets
+      gamePane.children.add(bullet2)
     }
-
-    // Add both bullets to the game pane and the list of bullets
-    bullets = bullet1 :: bullet2 :: bullets
-    gamePane.children.addAll(bullet1,bullet2)
-  }
-
-  def startGameLoop(): Unit = {
-    val timer = AnimationTimer(_ => {
-      updateBullets()
-    })
-
-    gameLoop = Some(timer)
-    timer.start()
-  }
-
-  def stopGameLoop(): Unit = {
-    gameLoop.foreach(_.stop())
-    gameLoop = None
   }
 
   def updateBullets(): Unit = {
@@ -132,6 +145,77 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
     bullets.foreach { bullet =>
       bullet.layoutY = bullet.layoutY.value - 5
     }
+  }
+
+  def spawnMissiles(): Unit = {
+    if (Random.nextDouble() < 0.02) { // Adjust spawn rate as needed
+
+      val missile = new ImageView(missileImage) {
+        fitWidth = 50
+        fitHeight = 100
+        layoutX = Random.nextDouble() * (gamePane.width.value - fitWidth.value)
+        layoutY = -fitHeight.value
+        rotate = 180 // Rotate by a random angle up to 180 degrees
+      }
+
+      // Assign a random speed to the asteroid
+      val speed = 2 + Random.nextDouble() * 4 // Speed between 2 and 5
+
+      // Add the asteroid to the game
+      missiles = (missile, speed) :: missiles
+      gamePane.children.add(missile)
+    }
+  }
+
+  def updateMissiles(): Unit = {
+    // Remove asteroids that have fallen off the screen
+    val asteroidsToRemove = missiles.filter { case (asteroid, _) => asteroid.layoutY.value > gamePane.height.value }
+    asteroidsToRemove.foreach { case (asteroid, _) =>
+      gamePane.children.remove(asteroid)
+    }
+    // Filter out the removed asteroids
+    missiles = missiles.filterNot(asteroid => asteroidsToRemove.contains(asteroid))
+
+    // Update positions of remaining asteroids
+    missiles.foreach { case (asteroid, speed) =>
+      asteroid.layoutY = asteroid.layoutY.value + speed
+    }
+  }
+
+  def checkCollisions(): Unit = {
+    // Iterate over bullets and asteroids to check for collisions
+    bullets.foreach { bullet =>
+      missiles.foreach { case (asteroid, _) =>
+        if (isColliding(bullet, asteroid)) {
+          gamePane.children.remove(bullet)
+          bullets = bullets.filterNot(_ == bullet)
+
+          // Replace the asteroid with the explosion image
+          val explosion = new ImageView(explosionImage) {
+            fitWidth = 90
+            fitHeight = 90
+            layoutX = asteroid.layoutX.value - 20
+            layoutY = asteroid.layoutY.value
+          }
+          gamePane.children.add(explosion)
+          gamePane.children.remove(asteroid)
+          missiles = missiles.filterNot { case (a, _) => a == asteroid }
+
+          // Remove the explosion image after a short delay
+          val pauseTransition = new PauseTransition(Duration(500)) { // Explosion visible for 0.5 seconds
+            onFinished = _ => gamePane.children.remove(explosion)
+          }
+          pauseTransition.play()
+        }
+      }
+    }
+  }
+
+  // Overloaded methods for collision detection
+  def isColliding(bullet: Rectangle, missile: ImageView): Boolean = {
+    val bulletBounds = bullet.boundsInParent.value
+    val missileBounds = missile.boundsInParent.value
+    bulletBounds.intersects(missileBounds)
   }
 
 

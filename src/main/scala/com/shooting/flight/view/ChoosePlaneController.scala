@@ -7,10 +7,10 @@ import scalafx.scene.control.Button
 import scalafxml.core.macros.sfxml
 
 @sfxml
-class ChoosePlaneController(val redShip: ImageView, val blackShip: ImageView,
+class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val blackShip: ImageView,
                          val previous: Button, val next: Button) {
 
-  private val ships = List(redShip, blackShip)
+  private val ships = List(redShip, blueShip, blackShip)
   PlaneProperty.currentIndex = 0
 
   // Initialize the controller

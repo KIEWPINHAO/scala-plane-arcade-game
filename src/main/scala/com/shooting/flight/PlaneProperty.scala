@@ -2,15 +2,16 @@ package com.shooting.flight
 
 import scalafx.scene.image.Image
 
-case class Plane(image: Image, speed: Int, weaponGap: Int)
+case class Plane(image: Image, speed: Int, twoWeapon: Boolean ,weaponGap: Int)
 
 object PlaneProperty {
   var currentIndex: Int = 0
 
-  val redShip = Plane(new Image("/images/redShip.png"), 18, 10)
-  val blackShip = Plane(new Image("/images/blackShip.png"), 13, 20)
+  val redShip = Plane(new Image("/images/redShip.png"), 15, twoWeapon = true ,10)
+  val blueShip = Plane(new Image("/images/blueShip.png"), 20, twoWeapon = false ,0)
+  val blackShip = Plane(new Image("/images/blackShip.png"), 10, twoWeapon = true,20)
 
-  val ships = List(redShip, blackShip)
+  val ships = List(redShip, blueShip, blackShip)
 
   private var selectedShip: Option[Plane] = None
 
