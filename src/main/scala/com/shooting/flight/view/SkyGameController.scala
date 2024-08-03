@@ -1,11 +1,15 @@
 package com.shooting.flight.view
 
+import com.shooting.flight.MainApp.showGameHall
 import com.shooting.flight.PlaneProperty
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import javafx.scene.{input => jfxsi}
 import javafx.event.EventHandler
 import scalafx.animation.{AnimationTimer, PauseTransition}
+import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control.{Alert, Label}
+import scalafx.scene.effect.DropShadow
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
@@ -15,17 +19,22 @@ import scala.util.Random
 
 
 @sfxml
-class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
+class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val heart1: ImageView, val heart2: ImageView, val heart3: ImageView, val scoring: Label){
 
   //all variables listed here
-  private var bullets = List[Rectangle]()
   var planeSpeed = 0
   var weaponGap = 0
   var multipleWeapon = true
-  private val missileImage = new Image("/images/missile.gif") // Replace with your image path
-  private var missiles = List[(ImageView, Double)]()
-  private val explosionImage = new Image("/images/explode.gif")
+
+  private var score: Int = 0
+  private var lives = 3 // Initial number of lives
+  private var invincible = false // Flag for invincibility
   private var gameLoop: Option[AnimationTimer] = None
+  private var bullets = List[Rectangle]()
+  private var missiles = List[(ImageView, Double)]()
+
+  private val missileImage = new Image("/images/missile.gif") // Replace with your image path
+  private val explosionImage = new Image("/images/explode.gif")
 
   initialize()
 
@@ -51,6 +60,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
       spawnMissiles()
       updateMissiles()
       checkCollisions()
+      checkPlaneCollisions()
     })
 
     gameLoop = Some(timer)
@@ -148,7 +158,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
   }
 
   def spawnMissiles(): Unit = {
-    if (Random.nextDouble() < 0.02) { // Adjust spawn rate as needed
+    if (Random.nextDouble() < 0.03) { // Adjust spawn rate as needed
 
       val missile = new ImageView(missileImage) {
         fitWidth = 50
@@ -206,6 +216,8 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
             onFinished = _ => gamePane.children.remove(explosion)
           }
           pauseTransition.play()
+          score += 75
+          refreshScoreLabel()
         }
       }
     }
@@ -218,5 +230,71 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane){
     bulletBounds.intersects(missileBounds)
   }
 
+  def refreshScoreLabel(): Unit = {
+    scoring.text = s"Score: $score"
+  }
+
+  def updateHeartVisibility(): Unit = {
+    heart1.visible = lives >= 1
+    heart2.visible = lives >= 2
+    heart3.visible = lives >= 3
+  }
+
+  def checkPlaneCollisions(): Unit = {
+    missiles.foreach { case (missile, _) =>
+      if (!invincible && isColliding(plane, missile)) {
+        gamePane.children.remove(missile)
+        missiles = missiles.filterNot { case (a, _) => a == missile }
+        lives -= 1
+        updateHeartVisibility()
+        if (lives <= 0) {
+          stopGameLoop() // Stop the game loop
+          showGameOverAlert()
+        } else {
+          activateInvincibility()
+        }
+      }
+    }
+  }
+
+  def isColliding(plane: ImageView, missile: ImageView): Boolean = {
+    val planeBounds = plane.boundsInParent.value
+    val missileBounds = missile.boundsInParent.value
+    planeBounds.intersects(missileBounds)
+  }
+
+  def showGameOverAlert(): Unit = {
+    //    Execute the alert display on the JavaFX application thread
+    scalafx.application.Platform.runLater {
+      val alert = new Alert(AlertType.Information) {
+        title = "Game Over"
+        headerText = "Game Over"
+        contentText = "You have lost all your lives. Better luck next time!"
+      }
+      alert.showAndWait()
+      showGameHall()
+    }
+  }
+
+  def activateInvincibility(): Unit = {
+    if (!invincible) { // Ensure invincibility is not already active
+      invincible = true
+      println("Invincibility activated")
+      val outlineEffect = new DropShadow {
+        color = Color.WHITE
+        radius = 20
+        spread = 0.7
+      }
+      plane.effect = outlineEffect
+      val pauseTransition = new PauseTransition(Duration(2500)) { // 3 seconds invincibility
+        onFinished = _ => {
+          invincible = false
+          plane.effect = null
+          println("Invincibility deactivated")
+        }
+      }
+      pauseTransition.play()
+    }
+  }
 
 }
