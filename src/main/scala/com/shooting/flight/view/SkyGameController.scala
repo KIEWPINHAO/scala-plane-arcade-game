@@ -264,7 +264,6 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   }
 
   def showGameOverAlert(): Unit = {
-    //    Execute the alert display on the JavaFX application thread
     scalafx.application.Platform.runLater {
       val alert = new Alert(AlertType.Information) {
         title = "Game Over"
