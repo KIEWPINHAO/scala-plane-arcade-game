@@ -31,7 +31,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
     println(PlaneProperty.currentIndex)
   }
 
-  def updateButtons(): Unit = {
+  def updateButtons(): Unit =  {
     previous.disable = PlaneProperty.currentIndex == 0
     next.disable = PlaneProperty.currentIndex == ships.length - 1
   }
