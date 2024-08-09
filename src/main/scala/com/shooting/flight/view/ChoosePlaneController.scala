@@ -9,10 +9,12 @@ import scalafxml.core.macros.sfxml
 
 @sfxml
 class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val blackShip: ImageView,
-                         val previous: Button, val next: Button, val weaponStar1: ImageView, val weaponStar2: ImageView, val weaponStar3: ImageView,
+                            val previous: Button, val next: Button, val weaponStar1: ImageView, val weaponStar2: ImageView, val weaponStar3: ImageView,
                             val speedStar1: ImageView, val speedStar2: ImageView, val speedStar3: ImageView, val name: TextField) {
 
   private val ships = List(redShip, blueShip, blackShip)
+  var weaponRating = 0
+  var speedRating = 0
   PlaneProperty.currentIndex = 0
   PlaneProperty.getSelectedPlane
 
@@ -20,14 +22,16 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
   initializeShip()
 
   def initializeShip(): Unit =   {
-    updateShips()
+    updatePlane()
     updateButtons()
+    updateStars()
   }
 
-  def updateShips(): Unit = {
+  def updatePlane(): Unit = {
     ships.zipWithIndex.foreach { case (ship, index) =>
       ship.visible = index == PlaneProperty.currentIndex
     }
+    updatePlaneRating()
     println(PlaneProperty.currentIndex)
   }
 
@@ -39,25 +43,41 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
   def goPre(): Unit = {
     if (PlaneProperty.currentIndex > 0) {
       PlaneProperty.currentIndex -= 1
-      updateShips()
+      updatePlane()
       updateButtons()
+      updateStars()
     }
   }
 
   def goNext(): Unit = {
     if (PlaneProperty.currentIndex < ships.length - 1) {
       PlaneProperty.currentIndex += 1
-      updateShips()
+      updatePlane()
       updateButtons()
+      updateStars()
     }
   }
 
-  private def updateSpaceshipImage(): Unit = {
+  private def updatePlaneRating(): Unit = {
     PlaneProperty.updateSelectedPlane()
     PlaneProperty.getSelectedPlane match {
       case Some(planeProperty) =>
-
+        weaponRating = planeProperty.weaponRating
+        speedRating = planeProperty.speedRating
+        updateStars()
     }
+  }
+
+  def updateStars(): Unit = {
+    // Update weapon stars based on weaponRating
+    weaponStar1.visible = weaponRating >= 1
+    weaponStar2.visible = weaponRating >= 2
+    weaponStar3.visible = weaponRating >= 3
+
+    // Update speed stars based on speedRating
+    speedStar1.visible = speedRating >= 1
+    speedStar2.visible = speedRating >= 2
+    speedStar3.visible = speedRating >= 3
   }
 
   def getCurrentIndex: Int = {
