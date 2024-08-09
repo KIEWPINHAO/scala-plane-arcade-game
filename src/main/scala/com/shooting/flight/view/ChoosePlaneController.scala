@@ -52,6 +52,14 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
     }
   }
 
+  private def updateSpaceshipImage(): Unit = {
+    PlaneProperty.updateSelectedPlane()
+    PlaneProperty.getSelectedPlane match {
+      case Some(planeProperty) =>
+
+    }
+  }
+
   def getCurrentIndex: Int = {
     PlaneProperty.currentIndex
   }

@@ -13,6 +13,7 @@ object PlaneProperty {
 
   val ships = List(redShip, blueShip, blackShip)
 
+
   private var selectedShip: Option[Plane] = None
 
   // Method to get a ship by index
