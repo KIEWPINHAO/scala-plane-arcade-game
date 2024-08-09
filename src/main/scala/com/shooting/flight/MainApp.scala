@@ -58,4 +58,24 @@ object MainApp extends JFXApp {
       root = hallRoot
     }
   }
+
+  def showLeaderboards(): Unit = {
+    val leader = getClass.getResource("view/Leaderboards.fxml")
+    val loader = new FXMLLoader(leader, NoDependencyResolver)
+    loader.load()
+    val leaderRoot = loader.getRoot[jfxs.layout.AnchorPane]
+    stage.scene = new Scene {
+      root = leaderRoot
+    }
+  }
+
+  def showHelp(): Unit = {
+    val help = getClass.getResource("view/Help.fxml")
+    val loader = new FXMLLoader(help, NoDependencyResolver)
+    loader.load()
+    val helpRoot = loader.getRoot[jfxs.layout.AnchorPane]
+    stage.scene = new Scene {
+      root = helpRoot
+    }
+  }
 }

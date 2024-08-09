@@ -39,17 +39,17 @@
                     <GridPane.margin>
                         <Insets top="40.0" />
                     </GridPane.margin></Button>
-            <Button mnemonicParsing="false" text="Leaderboard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button mnemonicParsing="false" onAction="#goLeader" text="Leaderboard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="110.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Help" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button mnemonicParsing="false" onAction="#goHelp" text="Help" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="180.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Exit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button mnemonicParsing="false" onAction="#goExit" text="Exit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="250.0" />
                </GridPane.margin>
