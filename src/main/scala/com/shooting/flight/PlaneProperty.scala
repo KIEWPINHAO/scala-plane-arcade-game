@@ -21,6 +21,7 @@ object PlaneProperty {
       Some(ships(index))
     } else {
       None
+
     }
   }
 
