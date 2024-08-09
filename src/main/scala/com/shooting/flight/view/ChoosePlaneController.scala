@@ -19,7 +19,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
   // Initialize the controller
   initializeShip()
 
-  def initializeShip(): Unit = {
+  def initializeShip(): Unit =  {
     updateShips()
     updateButtons()
   }
