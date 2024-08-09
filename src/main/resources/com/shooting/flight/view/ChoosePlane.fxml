@@ -50,6 +50,36 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <TextField layoutX="532.0" layoutY="542.0" prefHeight="31.0" prefWidth="231.0" />
+        <TextField fx:id="name" layoutX="532.0" layoutY="542.0" prefHeight="31.0" prefWidth="231.0" />
+      <ImageView fx:id="weaponStar1" fitHeight="30.0" fitWidth="30.0" layoutX="434.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weaponStar2" fitHeight="30.0" fitWidth="30.0" layoutX="464.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weaponStar3" fitHeight="30.0" fitWidth="30.0" layoutX="494.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="speedStar1" fitHeight="30.0" fitWidth="30.0" layoutX="648.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="speedStar2" fitHeight="30.0" fitWidth="30.0" layoutX="678.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="speedStar3" fitHeight="30.0" fitWidth="30.0" layoutX="708.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/star.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

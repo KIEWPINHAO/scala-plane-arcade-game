@@ -2,16 +2,19 @@ package com.shooting.flight.view
 
 import com.shooting.flight.MainApp
 import com.shooting.flight.PlaneProperty
+import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.image.ImageView
-import scalafx.scene.control.Button
+import scalafx.scene.control.{Alert, Button, TextField}
 import scalafxml.core.macros.sfxml
 
 @sfxml
 class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val blackShip: ImageView,
-                         val previous: Button, val next: Button) {
+                         val previous: Button, val next: Button, val weaponStar1: ImageView, val weaponStar2: ImageView, val weaponStar3: ImageView,
+                            val speedStar1: ImageView, val speedStar2: ImageView, val speedStar3: ImageView, val name: TextField) {
 
   private val ships = List(redShip, blueShip, blackShip)
   PlaneProperty.currentIndex = 0
+  PlaneProperty.getSelectedPlane
 
   // Initialize the controller
   initializeShip()
@@ -58,6 +61,18 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
   }
 
   def proceed(): Unit = {
-    MainApp.showGame()
+    if (name.text.value.trim.isEmpty) {
+      // Show an alert or message indicating that the name must be filled
+      val alert = new Alert(AlertType.Warning) {
+        initOwner(MainApp.stage)
+        title = "Input Required"
+        headerText = "Name is required"
+        contentText = "Please enter your name before proceeding."
+      }
+      alert.showAndWait()
+    } else {
+      // If the text field is not empty, proceed to the next screen
+      MainApp.showGame()
+    }
   }
 }
