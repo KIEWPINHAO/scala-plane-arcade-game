@@ -39,5 +39,15 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Label fx:id="pauseLabel" contentDisplay="CENTER" layoutX="426.0" layoutY="271.0" prefHeight="178.0" prefWidth="250.0" text="PAUSED" textFill="RED" visible="false">
+         <font>
+            <Font size="68.0" />
+         </font>
+      </Label>
+      <Label fx:id="pauseLabel2" layoutX="466.0" layoutY="419.0" text="Press P to continue" textFill="RED" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

@@ -10,27 +10,28 @@ import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.scene.Scene
 import javafx.{scene => jfxs}
 import scalafx.application.Platform
-import scalafx.scene.control.Alert.AlertType
+
 import scalafx.scene.control.{Alert, Label}
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
-import scalafx.stage.{Modality, Stage, Window}
 import scalafx.util.Duration
-import scalafxml.core.{FXMLLoader, NoDependencyResolver}
+
 
 import scala.util.Random
 
 
 @sfxml
-class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val heart1: ImageView, val heart2: ImageView, val heart3: ImageView, val scoring: Label){
+class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val heart1: ImageView, val heart2: ImageView, val heart3: ImageView, val scoring: Label,
+                        val pauseLabel : Label, val pauseLabel2: Label){
 
   //all variables listed here
   var planeSpeed = 0
   var weaponGap = 0
   var multipleWeapon = true
 
+  private var isPaused = false
   private var score: Int = 0
   private var lives = 3 // Initial number of lives
   private var invincible = false // Flag for invincibility
@@ -113,6 +114,13 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
 
       case jfxsi.KeyCode.SPACE =>
         shoot()
+
+      case jfxsi.KeyCode.P =>
+        if (isPaused) {
+          resumeGame()
+        } else {
+          pauseGame()
+        }
 
       case _ =>
     }
@@ -289,6 +297,20 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
       }
       pauseTransition.play()
     }
+  }
+
+  def pauseGame(): Unit = {
+    isPaused = true
+    pauseLabel.visible = true // Show the pause label
+    pauseLabel2.visible = true
+    stopGameLoop() // Stop the game loop
+  }
+
+  def resumeGame(): Unit = {
+    isPaused = false
+    pauseLabel.visible = false // Show the pause label
+    pauseLabel2.visible = false
+    startGameLoop() // Resume the game loop
   }
 
 }
