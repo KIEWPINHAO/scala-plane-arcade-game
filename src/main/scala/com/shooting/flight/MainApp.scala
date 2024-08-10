@@ -1,5 +1,6 @@
 package com.shooting.flight
 
+import com.shooting.flight.view.EndGameController
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
@@ -8,6 +9,7 @@ import javafx.{scene => jfxs}
 import scalafx.Includes._
 import scalafx.scene.image.Image
 import scalafx.scene.input.KeyEvent
+import scalafx.stage.{Modality, Stage}
 
 
 
@@ -78,4 +80,28 @@ object MainApp extends JFXApp {
       root = helpRoot
     }
   }
+
+  def showEndGame(score: Int): Unit = {
+    val resource = getClass.getResourceAsStream("view/EndGame.fxml")
+    val loader = new FXMLLoader(null, NoDependencyResolver)
+    loader.load(resource);
+    val roots2  = loader.getRoot[jfxs.Parent]
+    val control = loader.getController[EndGameController#Controller]
+
+    control.setScore(score)
+
+    val dialog = new Stage() {
+      title = "Game Over"
+      initModality(Modality.ApplicationModal)
+      initOwner(stage)
+      scene = new Scene {
+        root = roots2
+      }
+    }
+    control.dialogStage = dialog
+    dialog.showAndWait()
+    control.okClicked
+  }
+
+
 }

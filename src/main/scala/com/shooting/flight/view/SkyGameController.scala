@@ -1,19 +1,24 @@
 package com.shooting.flight.view
 
 import com.shooting.flight.MainApp.showGameHall
-import com.shooting.flight.PlaneProperty
+import com.shooting.flight.{MainApp, PlaneProperty}
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import javafx.scene.{input => jfxsi}
 import javafx.event.EventHandler
 import scalafx.animation.{AnimationTimer, PauseTransition}
+import scalafx.scene.Scene
+import javafx.{scene => jfxs}
+import scalafx.application.Platform
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control.{Alert, Label}
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
+import scalafx.stage.{Modality, Stage, Window}
 import scalafx.util.Duration
+import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 
 import scala.util.Random
 
@@ -249,7 +254,10 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
         updateHeartVisibility()
         if (lives <= 0) {
           stopGameLoop() // Stop the game loop
-          showGameOverAlert()
+          Platform.runLater{
+            MainApp.showEndGame(score)
+          }
+
         } else {
           activateInvincibility()
         }
@@ -263,22 +271,10 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
     planeBounds.intersects(missileBounds)
   }
 
-  def showGameOverAlert(): Unit = {
-    scalafx.application.Platform.runLater {
-      val alert = new Alert(AlertType.Information) {
-        title = "Game Over"
-        headerText = "Game Over"
-        contentText = "You have lost all your lives. Better luck next time!"
-      }
-      alert.showAndWait()
-      showGameHall()
-    }
-  }
 
   def activateInvincibility(): Unit = {
     if (!invincible) { // Ensure invincibility is not already active
       invincible = true
-      println("Invincibility activated")
       val outlineEffect = new DropShadow {
         color = Color.WHITE
         radius = 20
@@ -289,7 +285,6 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
         onFinished = _ => {
           invincible = false
           plane.effect = null
-          println("Invincibility deactivated")
         }
       }
       pauseTransition.play()
