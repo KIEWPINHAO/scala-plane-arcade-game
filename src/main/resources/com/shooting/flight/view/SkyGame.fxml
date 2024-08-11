@@ -6,18 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="rootPane" fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shooting.flight.view.SkyGameController">
+<AnchorPane id="rootPane" fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" style="-fx-background-color: Black;" stylesheets="@BrownPixelTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shooting.flight.view.SkyGameController">
     <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/images/skyBack.png" />
          </image>
       </ImageView>
-        <Label fx:id="scoring" layoutX="670.0" layoutY="49.0" prefHeight="36.0" prefWidth="222.0" textFill="WHITE" AnchorPane.rightAnchor="50.0">
-            <font>
-                <Font name="SimHei" size="33.0" />
-            </font>
-        </Label>
         <ImageView fx:id="plane" fitHeight="70.0" fitWidth="70.0" layoutX="100.0" layoutY="600.0" />
       <ImageView fx:id="heart1" fitHeight="50.0" fitWidth="50.0" layoutX="62.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
          <image>
@@ -34,17 +29,17 @@
             <Image url="/images/heart.png" />
          </image>
       </ImageView>
-      <Label fx:id="scoring" layoutX="811.0" layoutY="36.0" prefHeight="44.0" prefWidth="214.0" textFill="WHITE" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="30.0">
+      <Label fx:id="scoring" layoutX="811.0" layoutY="36.0" prefHeight="44.0" prefWidth="250.0" textFill="WHITE" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="30.0">
          <font>
-            <Font size="24.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="pauseLabel" contentDisplay="CENTER" layoutX="426.0" layoutY="271.0" prefHeight="178.0" prefWidth="250.0" text="PAUSED" textFill="RED" visible="false">
+      <Label fx:id="pauseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="354.0" layoutY="271.0" prefHeight="178.0" prefWidth="465.0" text="PAUSED" textFill="RED" visible="false">
          <font>
             <Font size="68.0" />
          </font>
       </Label>
-      <Label fx:id="pauseLabel2" layoutX="466.0" layoutY="419.0" text="Press P to continue" textFill="RED" visible="false">
+      <Label fx:id="pauseLabel2" layoutX="397.0" layoutY="408.0" text="Press P to continue" textFill="RED" visible="false">
          <font>
             <Font size="20.0" />
          </font>

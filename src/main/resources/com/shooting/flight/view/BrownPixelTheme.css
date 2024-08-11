@@ -1,0 +1,128 @@
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url("fonts/PressStart2P-Regular.ttf") format('truetype');
+}
+
+
+.background {
+    -fx-background-color: #4b2e05; /* Dark brown background */
+}
+
+.label {
+    -fx-font-family: "Press Start 2P"; /* Using a pixelated font */
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-opacity: 1;
+}
+
+.label-bright {
+    -fx-font-family: "Press Start 2P";
+    -fx-text-fill: #ffffff;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-family: "Press Start 2P";
+    -fx-text-fill: #ffffff;
+    -fx-opacity: 1;
+}
+
+#pauseLabel {
+    -fx-text-fill: red;
+}
+
+#pauseLabel2 {
+    -fx-text-fill: red;
+}
+
+.table-view {
+    -fx-base: #4b2e05; /* Dark brown base */
+    -fx-control-inner-background: #4b2e05;
+    -fx-background-color: #4b2e05;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 15;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "Press Start 2P";
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.text-field {
+    -fx-font-family: "Press Start 2P";
+    -fx-background-color: #ffffff; /* White background for text fields */
+    -fx-text-fill: #4b2e05; /* Dark brown text color */
+}
+
+/* Metro style Push Button */
+.button {
+    -fx-padding: 8 24 8 24; /* Increased padding for a chunkier, pixelated look */
+    -fx-border-color: #3b2404; /* Darker brown border for contrast */
+    -fx-border-width: 3; /* Thicker border to mimic pixel art style */
+    -fx-background-radius: 0; /* Sharp corners */
+    -fx-background-color: #4b2e05; /* Dark brown background */
+    -fx-font-family: "Press Start 2P"; /* Pixel font */
+    -fx-font-size: 14pt; /* Slightly larger font for clarity */
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-background-insets: 0; /* No background insets for a solid look */
+    -fx-effect: null; /* Remove any default effects for a flat, pixelated appearance */
+}
+
+.button:hover {
+    -fx-background-color: #3e2604; /* Slightly darker brown for hover effect */
+    -fx-border-color: #ffffff; /* White border on hover */
+    -fx-text-fill: #ffffff;
+}
+
+.button:pressed, .button:default:hover:pressed {
+    -fx-background-color: #ffffff; /* White background when pressed */
+    -fx-text-fill: #4b2e05; /* Dark brown text when pressed */
+    -fx-border-color: #4b2e05; /* Dark brown border when pressed */
+}
+
+.button:focused {
+    -fx-border-color: #ffffff; /* White border when focused */
+    -fx-border-width: 3; /* Consistent thick border */
+    -fx-background-color: #4b2e05; /* Maintain background color */
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #4b2e05; /* Dark brown background when disabled */
+    -fx-text-fill: #ffffff; /* White text when disabled */
+}
+
+.button:default {
+    -fx-background-color: #4b2e05; /* Dark brown background by default */
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-border-color: #ffffff; /* White border by default */
+}
+
+.button:default:hover {
+    -fx-background-color: #3e2604; /* Slightly darker brown for hover effect */
+    -fx-border-color: #ffffff; /* White border on hover */
+    -fx-text-fill: #ffffff;
+}

@@ -95,6 +95,7 @@ object MainApp extends JFXApp {
       initModality(Modality.ApplicationModal)
       initOwner(stage)
       scene = new Scene {
+        stylesheets += getClass.getResource("view/BrownPixelTheme.css").toString
         root = roots2
       }
     }
