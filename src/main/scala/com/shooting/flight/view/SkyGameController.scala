@@ -1,6 +1,7 @@
 package com.shooting.flight.view
 
-import com.shooting.flight.MainApp.showGameHall
+import com.shooting.flight.MainApp.{playerName, showGameHall}
+import com.shooting.flight.model.LeaderboardEntry
 import com.shooting.flight.{MainApp, PlaneProperty}
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
@@ -10,7 +11,6 @@ import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.scene.Scene
 import javafx.{scene => jfxs}
 import scalafx.application.Platform
-
 import scalafx.scene.control.{Alert, Label}
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.layout.AnchorPane
@@ -18,7 +18,7 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 import scalafx.util.Duration
 
-
+import java.time.LocalDateTime
 import scala.util.Random
 
 
@@ -31,6 +31,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   var weaponGap = 0
   var multipleWeapon = true
 
+  private var playerInsertName: String = _
   private var isPaused = false
   private var score: Int = 0
   private var lives = 3 // Initial number of lives
@@ -58,6 +59,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
     }
     startGameLoop()
     updateSpaceshipImage()
+    playerInsertName = MainApp.playerName
   }
 
   def startGameLoop(): Unit = {
@@ -262,6 +264,8 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
         updateHeartVisibility()
         if (lives <= 0) {
           stopGameLoop() // Stop the game loop
+          val entry = LeaderboardEntry(1,playerInsertName, score, LocalDateTime.now())
+          LeaderboardEntry.save(entry)
           Platform.runLater{
             MainApp.showEndGame(score)
           }

@@ -12,6 +12,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
                             val previous: Button, val next: Button, val weaponStar1: ImageView, val weaponStar2: ImageView, val weaponStar3: ImageView,
                             val speedStar1: ImageView, val speedStar2: ImageView, val speedStar3: ImageView, val name: TextField) {
 
+  private var playerName: String = ""
   private val ships = List(redShip, blueShip, blackShip)
   var weaponRating = 0
   var speedRating = 0
@@ -32,7 +33,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
       ship.visible = index == PlaneProperty.currentIndex
     }
     updatePlaneRating()
-    println(PlaneProperty.currentIndex)
+//    println(PlaneProperty.currentIndex)
   }
 
   def updateButtons(): Unit =  {
@@ -100,7 +101,15 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
       alert.showAndWait()
     } else {
       // If the text field is not empty, proceed to the next screen
+      updatePlayerName()
       MainApp.showGame()
     }
   }
+
+  def updatePlayerName(): Unit = {
+    playerName = name.text.value
+    MainApp.playerName = playerName
+  }
+
+
 }
