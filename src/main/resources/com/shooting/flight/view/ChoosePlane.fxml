@@ -15,24 +15,24 @@
          <image>
             <Image url="/images/planeBack.jpg" />
          </image></ImageView>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#906a49" height="548.0" layoutX="310.0" layoutY="76.0" opacity="0.7" stroke="TRANSPARENT" strokeLineCap="ROUND" strokeType="INSIDE" width="480.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#65462c" height="548.0" layoutX="310.0" layoutY="76.0" opacity="0.7" stroke="TRANSPARENT" strokeLineCap="ROUND" strokeType="INSIDE" width="480.0" />
         <Button fx:id="previous" layoutX="218.0" layoutY="226.0" mnemonicParsing="false" onAction="#goPre" text="&lt;" />
         <Button fx:id="next" layoutX="847.0" layoutY="226.0" mnemonicParsing="false" onAction="#goNext" text="&gt;" />
         <Button layoutX="52.0" layoutY="43.0" mnemonicParsing="false" onAction="#goHome" text="Back" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
         <Button layoutX="977.0" layoutY="633.0" mnemonicParsing="false" onAction="#proceed" text="Start" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-        <ImageView fx:id="redShip" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="redPlane" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="/images/redShip.png" />
+                <Image url="/images/redPlane.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="blackShip" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="blackPlane" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="/images/blackShip.png" />
+                <Image url="/images/blackPlane.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="blueShip" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bluePlane" fitHeight="300.0" fitWidth="300.0" layoutX="408.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/images/blueShip.png" />
+            <Image url="/images/bluePlane.png" />
          </image>
       </ImageView>
         <Label layoutX="345.0" layoutY="441.0" text="Weapon:" textFill="WHITE" />

@@ -32,7 +32,7 @@ object MainApp extends JFXApp {
   // Set up the primary stage with the game lobby
   stage = new PrimaryStage {
     title = "Ace of the Sky"
-    icons += new Image(getClass.getResourceAsStream("/images/redShip.png"))
+    icons += new Image(getClass.getResourceAsStream("/images/redPlane.png"))
     scene = new Scene {
       root = roots
     }

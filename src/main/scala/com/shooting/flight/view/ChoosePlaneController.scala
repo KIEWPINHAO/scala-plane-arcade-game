@@ -8,29 +8,29 @@ import scalafx.scene.control.{Alert, Button, TextField}
 import scalafxml.core.macros.sfxml
 
 @sfxml
-class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val blackShip: ImageView,
+class ChoosePlaneController(val redPlane: ImageView, val bluePlane: ImageView, val blackPlane: ImageView,
                             val previous: Button, val next: Button, val weaponStar1: ImageView, val weaponStar2: ImageView, val weaponStar3: ImageView,
                             val speedStar1: ImageView, val speedStar2: ImageView, val speedStar3: ImageView, val name: TextField) {
 
   private var playerName: String = ""
-  private val ships = List(redShip, blueShip, blackShip)
+  private val planes = List(redPlane, bluePlane, blackPlane)
   var weaponRating = 0
   var speedRating = 0
   PlaneProperty.currentIndex = 0
   PlaneProperty.getSelectedPlane
 
   // Initialize the controller
-  initializeShip()
+  initializePlane()
 
-  def initializeShip(): Unit =   {
+  def initializePlane(): Unit =   {
     updatePlane()
     updateButtons()
     updateStars()
   }
 
   def updatePlane(): Unit = {
-    ships.zipWithIndex.foreach { case (ship, index) =>
-      ship.visible = index == PlaneProperty.currentIndex
+    planes.zipWithIndex.foreach { case (plane, index) =>
+      plane.visible = index == PlaneProperty.currentIndex
     }
     updatePlaneRating()
 //    println(PlaneProperty.currentIndex)
@@ -38,7 +38,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
 
   def updateButtons(): Unit =  {
     previous.disable = PlaneProperty.currentIndex == 0
-    next.disable = PlaneProperty.currentIndex == ships.length - 1
+    next.disable = PlaneProperty.currentIndex == planes.length - 1
   }
 
   def goPre(): Unit = {
@@ -51,7 +51,7 @@ class ChoosePlaneController(val redShip: ImageView, val blueShip: ImageView,val 
   }
 
   def goNext(): Unit = {
-    if (PlaneProperty.currentIndex < ships.length - 1) {
+    if (PlaneProperty.currentIndex < planes.length - 1) {
       PlaneProperty.currentIndex += 1
       updatePlane()
       updateButtons()
