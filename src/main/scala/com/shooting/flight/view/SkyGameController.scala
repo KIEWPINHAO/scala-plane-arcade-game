@@ -58,7 +58,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
       })
     }
     startGameLoop()
-    updateSpaceshipImage()
+    updatePlaneImage()
     playerInsertName = MainApp.playerName
   }
 
@@ -80,7 +80,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
     gameLoop = None
   }
 
-  private def updateSpaceshipImage(): Unit = {
+  private def updatePlaneImage(): Unit = {
     PlaneProperty.updateSelectedPlane()
     PlaneProperty.getSelectedPlane match {
       case Some(planeProperty) =>
@@ -173,7 +173,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   }
 
   def spawnMissiles(): Unit = {
-    if (Random.nextDouble() < 0.03) { // Adjust spawn rate as needed
+    if (Random.nextDouble() < 0.04) { // Adjust spawn rate as needed
 
       val missile = new ImageView(missileImage) {
         fitWidth = 50
@@ -183,48 +183,48 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
         rotate = 180 // Rotate by a random angle up to 180 degrees
       }
 
-      // Assign a random speed to the asteroid
+      // Assign a random speed to the missiles
       val speed = 2 + Random.nextDouble() * 4 // Speed between 2 and 5
 
-      // Add the asteroid to the game
+      // Add the missiles to the game
       missiles = (missile, speed) :: missiles
       gamePane.children.add(missile)
     }
   }
 
   def updateMissiles(): Unit = {
-    // Remove asteroids that have fallen off the screen
-    val asteroidsToRemove = missiles.filter { case (asteroid, _) => asteroid.layoutY.value > gamePane.height.value }
-    asteroidsToRemove.foreach { case (asteroid, _) =>
-      gamePane.children.remove(asteroid)
+    // Remove missile that have fallen off the screen
+    val missilesToRemove = missiles.filter { case (missile, _) => missile.layoutY.value > gamePane.height.value }
+    missilesToRemove.foreach { case (missile, _) =>
+      gamePane.children.remove(missile)
     }
-    // Filter out the removed asteroids
-    missiles = missiles.filterNot(asteroid => asteroidsToRemove.contains(asteroid))
+    // Filter out the removed missiles
+    missiles = missiles.filterNot(missile => missilesToRemove.contains(missile))
 
-    // Update positions of remaining asteroids
-    missiles.foreach { case (asteroid, speed) =>
-      asteroid.layoutY = asteroid.layoutY.value + speed
+    // Update positions of remaining missiles
+    missiles.foreach { case (missile, speed) =>
+      missile.layoutY = missile.layoutY.value + speed
     }
   }
 
   def checkCollisions(): Unit = {
-    // Iterate over bullets and asteroids to check for collisions
+    // Iterate over bullets and missile to check for collisions
     bullets.foreach { bullet =>
-      missiles.foreach { case (asteroid, _) =>
-        if (isColliding(bullet, asteroid)) {
+      missiles.foreach { case (missile, _) =>
+        if (isColliding(bullet, missile)) {
           gamePane.children.remove(bullet)
           bullets = bullets.filterNot(_ == bullet)
 
-          // Replace the asteroid with the explosion image
+          // Replace the missile with the explosion image
           val explosion = new ImageView(explosionImage) {
             fitWidth = 90
             fitHeight = 90
-            layoutX = asteroid.layoutX.value - 20
-            layoutY = asteroid.layoutY.value
+            layoutX = missile.layoutX.value - 20
+            layoutY = missile.layoutY.value
           }
           gamePane.children.add(explosion)
-          gamePane.children.remove(asteroid)
-          missiles = missiles.filterNot { case (a, _) => a == asteroid }
+          gamePane.children.remove(missile)
+          missiles = missiles.filterNot { case (a, _) => a == missile }
 
           // Remove the explosion image after a short delay
           val pauseTransition = new PauseTransition(Duration(500)) { // Explosion visible for 0.5 seconds
