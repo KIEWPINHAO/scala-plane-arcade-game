@@ -42,6 +42,7 @@ class ChoosePlaneController(val redPlane: ImageView, val bluePlane: ImageView, v
   }
 
   def goPre(): Unit = {
+    MainApp.playButtonSound1()
     if (PlaneProperty.currentIndex > 0) {
       PlaneProperty.currentIndex -= 1
       updatePlane()
@@ -51,6 +52,7 @@ class ChoosePlaneController(val redPlane: ImageView, val bluePlane: ImageView, v
   }
 
   def goNext(): Unit = {
+    MainApp.playButtonSound1()
     if (PlaneProperty.currentIndex < planes.length - 1) {
       PlaneProperty.currentIndex += 1
       updatePlane()
@@ -86,6 +88,7 @@ class ChoosePlaneController(val redPlane: ImageView, val bluePlane: ImageView, v
   }
 
   def goHome(): Unit = {
+    MainApp.playButtonSound1()
     MainApp.showGameHall()
   }
 
@@ -101,6 +104,7 @@ class ChoosePlaneController(val redPlane: ImageView, val bluePlane: ImageView, v
       alert.showAndWait()
     } else {
       // If the text field is not empty, proceed to the next screen
+      MainApp.playButtonSound1()
       updatePlayerName()
       MainApp.showGame()
     }

@@ -11,18 +11,22 @@ class GameHallController(){
 
   def getStart(): Unit = {
     MainApp.showChoose()
+    MainApp.playButtonSound1()
   }
 
   def goHome(): Unit = {
     MainApp.showGameHall()
+    MainApp.playButtonSound1()
   }
 
   def goLeader(): Unit = {
     MainApp.showLeaderboards()
+    MainApp.playButtonSound1()
   }
 
   def goHelp(): Unit = {
     MainApp.showHelp()
+    MainApp.playButtonSound1()
   }
 
   def goExit(): Unit = {

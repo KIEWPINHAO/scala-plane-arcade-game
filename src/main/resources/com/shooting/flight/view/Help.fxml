@@ -16,7 +16,7 @@
             </image>
         </ImageView>
         <Button layoutX="62.0" layoutY="58.0" mnemonicParsing="false" onAction="#goHome" opacity="0.8" text="Back" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-        <BorderPane layoutX="123.0" layoutY="144.0" opacity="0.20" prefHeight="401.0" prefWidth="846.0" style="-fx-background-color: gray;" />
+        <BorderPane layoutX="123.0" layoutY="144.0" opacity="0.61" prefHeight="485.0" prefWidth="846.0" styleClass="background" />
         <ImageView fitHeight="500.0" fitWidth="700.0" layoutX="290.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0">
             <image>
                 <Image url="/images/keyboard.png" />
@@ -27,5 +27,8 @@
                 <Font size="31.0" />
             </font>
         </Label>
+      <Label layoutX="224.0" layoutY="496.0" prefHeight="26.0" prefWidth="358.0" text="Protect you homeland!" />
+      <Label layoutX="224.0" layoutY="530.0" prefHeight="17.0" prefWidth="595.0" text="Dodge and destroy incomming missiles! " />
+      <Label layoutX="224.0" layoutY="555.0" text="As many as you can!" />
     </children>
 </AnchorPane>

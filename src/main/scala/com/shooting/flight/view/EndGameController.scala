@@ -27,6 +27,7 @@ class EndGameController(val closeButton: Button, val endScore: Label) {
   def handleOk(action :ActionEvent){
     okClicked = true;
     dialogStage.close()
+    MainApp.playButtonSound1()
     MainApp.showGameHall()
   }
 }

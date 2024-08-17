@@ -3,7 +3,6 @@
     src: url("fonts/PressStart2P-Regular.ttf") format('truetype');
 }
 
-
 .background {
     -fx-background-color: #4b2e05; /* Dark brown background */
 }
@@ -64,6 +63,18 @@
     -fx-text-fill: #ffffff;
     -fx-alignment: center-left;
     -fx-opacity: 1;
+}
+
+.table-view .table-row-cell .label {
+    -fx-font-family: "Press Start 2P";
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+    -fx-font-size: 12px; /* Adjust font size as needed */
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {

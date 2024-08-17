@@ -12,6 +12,7 @@ import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.image.Image
 import scalafx.scene.input.KeyEvent
+import scalafx.scene.media.{Media, MediaPlayer}
 import scalafx.stage.{Modality, Stage}
 
 
@@ -21,8 +22,12 @@ object MainApp extends JFXApp {
 
   val leaderBoard = new ObservableBuffer[LeaderboardEntry]()
 
-
   var playerName : String = "x"
+
+  val backgroundMusic = new Media(getClass.getResource("/musics/bgMusic_apex.mp3").toString)
+  val player = new MediaPlayer(backgroundMusic)
+  player.setCycleCount(MediaPlayer.Indefinite)
+  player.play()
 
   val lobbyResource = getClass.getResource("view/GameHall.fxml")
   val loader = new FXMLLoader(lobbyResource, NoDependencyResolver)
@@ -39,6 +44,7 @@ object MainApp extends JFXApp {
   }
 
   def showGame(): Unit = {
+    player.stop()
     val gameResource = getClass.getResource("view/SkyGame.fxml")
     val gameLoader = new FXMLLoader(gameResource, NoDependencyResolver)
     gameLoader.load()
@@ -114,6 +120,14 @@ object MainApp extends JFXApp {
     control.dialogStage = dialog
     dialog.showAndWait()
     control.okClicked
+  }
+
+  val buttonSound1 = new Media(getClass.getResource("/sounds/buttonSound1.mp3").toString)
+  val buttonSoundEffect1 = new MediaPlayer(buttonSound1)
+
+  def playButtonSound1(): Unit = {
+    buttonSoundEffect1.stop()
+    buttonSoundEffect1.play()
   }
 
 

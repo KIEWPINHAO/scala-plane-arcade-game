@@ -35,6 +35,7 @@ class LeaderboardsController(   val leaderboardTable: TableView[LeaderboardEntry
 
   def goHome(): Unit = {
     MainApp.showGameHall()
+    MainApp.playButtonSound1()
   }
 
 }

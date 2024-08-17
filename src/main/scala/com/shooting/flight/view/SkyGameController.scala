@@ -7,13 +7,11 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import javafx.scene.{input => jfxsi}
 import javafx.event.EventHandler
-import scalafx.animation.{AnimationTimer, PauseTransition}
-import scalafx.scene.Scene
-import javafx.{scene => jfxs}
+import scalafx.animation.{Animation, AnimationTimer, FadeTransition, PauseTransition, SequentialTransition, Timeline}
 import scalafx.application.Platform
 import scalafx.scene.control.{Alert, Label}
-import scalafx.scene.effect.DropShadow
 import scalafx.scene.layout.AnchorPane
+import scalafx.scene.media.{Media, MediaPlayer}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 import scalafx.util.Duration
@@ -42,6 +40,22 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
 
   private val missileImage = new Image("/images/missile.gif") // Replace with your image path
   private val explosionImage = new Image("/images/explode.gif")
+
+  val shootSound = new Media(getClass.getResource("/sounds/shoot_sound.mp3").toString)
+  val explosionSound = new Media(getClass.getResource("/sounds/explosion_Sound.mp3").toString)
+  val getHitSound = new Media(getClass.getResource("/sounds/getHit_Sound.mp3").toString)
+  val planeDownSound = new Media(getClass.getResource("/sounds/planeDown_Sound.mp3").toString)
+
+  // Create MediaPlayer instances for sound effects
+  val shootSoundPlayer = new MediaPlayer(shootSound)
+  val explosionSoundPlayer = new MediaPlayer(explosionSound)
+  val getHitSoundPlayer = new MediaPlayer(getHitSound)
+  val planeDownSoundPlayer = new MediaPlayer(planeDownSound)
+
+  val backgroundMusic1 = new Media(getClass.getResource("/musics/bgMusic_phonk.mp3").toString)
+  val bgMusic = new MediaPlayer(backgroundMusic1)
+  bgMusic.setCycleCount(MediaPlayer.Indefinite)
+  bgMusic.play()
 
   initialize()
 
@@ -144,6 +158,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
 
     bullets = bullet1 :: bullets
     gamePane.children.add(bullet1)
+    playShootSound()
 
     if (multipleWeapon) {
       // Create the second bullet, slightly offset from the first
@@ -222,6 +237,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
             layoutX = missile.layoutX.value - 20
             layoutY = missile.layoutY.value
           }
+          playExplosionSound()
           gamePane.children.add(explosion)
           gamePane.children.remove(missile)
           missiles = missiles.filterNot { case (a, _) => a == missile }
@@ -261,12 +277,15 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
         gamePane.children.remove(missile)
         missiles = missiles.filterNot { case (a, _) => a == missile }
         lives -= 1
+        playHitSound()
         updateHeartVisibility()
         if (lives <= 0) {
+          playPlaneDownSound()
           stopGameLoop() // Stop the game loop
           val entry = LeaderboardEntry(1,playerInsertName, score, LocalDateTime.now())
           LeaderboardEntry.save(entry)
           Platform.runLater{
+            bgMusic.stop()
             MainApp.showEndGame(score)
           }
 
@@ -287,18 +306,29 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   def activateInvincibility(): Unit = {
     if (!invincible) { // Ensure invincibility is not already active
       invincible = true
-      val outlineEffect = new DropShadow {
-        color = Color.WHITE
-        radius = 20
-        spread = 0.7
+
+      // Create a fade transition to handle the strobing effect
+      val fadeTransition = new FadeTransition {
+        duration = Duration(200)
+        node = plane
+        fromValue = 1.0
+        toValue = 0.2
+        cycleCount = Animation.Indefinite
+        autoReverse = true
       }
-      plane.effect = outlineEffect
-      val pauseTransition = new PauseTransition(Duration(2500)) { // 3 seconds invincibility
+
+      fadeTransition.play()
+
+      // Create a pause transition for the invincibility duration
+      val pauseTransition = new PauseTransition {
+        duration = Duration(2500) // 2.5 seconds invincibility
         onFinished = _ => {
           invincible = false
-          plane.effect = null
+          plane.opacity = 1.0 // Ensure the plane is fully visible when invincibility ends
+          fadeTransition.stop() // Stop the strobing effect
         }
       }
+
       pauseTransition.play()
     }
   }
@@ -315,6 +345,27 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
     pauseLabel.visible = false // Show the pause label
     pauseLabel2.visible = false
     startGameLoop() // Resume the game loop
+  }
+
+  def playShootSound(): Unit = {
+    shootSoundPlayer.stop() // Stop any current playback
+    shootSoundPlayer.play()
+  }
+
+  // Play the explosion sound effect when an asteroid is destroyed
+  def playExplosionSound(): Unit = {
+    explosionSoundPlayer.stop() // Stop any current playback
+    explosionSoundPlayer.play()
+  }
+
+  def playHitSound(): Unit = {
+    getHitSoundPlayer.stop()
+    getHitSoundPlayer.play()
+  }
+
+  def playPlaneDownSound(): Unit = {
+    planeDownSoundPlayer.stop()
+    planeDownSoundPlayer.play()
   }
 
 }
