@@ -68,6 +68,7 @@ object MainApp extends JFXApp {
   }
 
   def showGameHall(): Unit = {
+    player.play()
     val hall = getClass.getResource("view/GameHall.fxml")
     val loader = new FXMLLoader(hall, NoDependencyResolver)
     loader.load()

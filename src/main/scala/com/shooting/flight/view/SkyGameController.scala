@@ -1,6 +1,5 @@
 package com.shooting.flight.view
 
-import com.shooting.flight.MainApp.{playerName, showGameHall}
 import com.shooting.flight.model.LeaderboardEntry
 import com.shooting.flight.{MainApp, PlaneProperty}
 import scalafx.scene.image.{Image, ImageView}
@@ -28,6 +27,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   var planeSpeed = 0
   var weaponGap = 0
   var multipleWeapon = true
+  var bulletColor: Color = Color.Green
 
   private var playerInsertName: String = _
   private var isPaused = false
@@ -37,6 +37,10 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
   private var gameLoop: Option[AnimationTimer] = None
   private var bullets = List[Rectangle]()
   private var missiles = List[(ImageView, Double)]()
+  private val selectedPlane = PlaneProperty.getSelectedPlane
+  selectedPlane.foreach { plane =>
+    bulletColor= plane.bulletColor
+  }
 
   private val missileImage = new Image("/images/missile.gif") // Replace with your image path
   private val explosionImage = new Image("/images/explode.gif")
@@ -146,12 +150,13 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
     // Optionally handle key releases if needed
   }
 
+
   def shoot(): Unit = {
     // Create the first bullet
     val bullet1 = new Rectangle {
       width = 5
       height = 10
-      fill = Color.Red
+      fill = bulletColor
       layoutX = plane.layoutX.value + plane.fitWidth() / 2 - 2.5 - weaponGap
       layoutY = plane.layoutY.value - 10
     }
@@ -165,7 +170,7 @@ class SkyGameController(val plane: ImageView, val gamePane: AnchorPane, val hear
       val bullet2 = new Rectangle {
         width = 5
         height = 10
-        fill = Color.Red
+        fill = bulletColor
         layoutX = plane.layoutX.value + plane.fitWidth() / 2 - 2.5 + weaponGap // Adjust offset as needed
         layoutY = plane.layoutY.value - 10
       }
