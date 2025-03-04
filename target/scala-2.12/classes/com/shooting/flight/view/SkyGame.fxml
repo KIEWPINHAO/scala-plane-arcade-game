@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="rootPane" fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" style="-fx-background-color: Black;" stylesheets="@BrownPixelTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shooting.flight.view.SkyGameController">
+    <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/images/skyBack.png" />
+         </image>
+      </ImageView>
+        <ImageView fx:id="plane" fitHeight="70.0" fitWidth="70.0" layoutX="100.0" layoutY="600.0" />
+      <ImageView fx:id="heart1" fitHeight="50.0" fitWidth="50.0" layoutX="62.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
+         <image>
+            <Image url="/images/heart.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="heart2" fitHeight="50.0" fitWidth="50.0" layoutX="100.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="30.0">
+         <image>
+            <Image url="/images/heart.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="heart3" fitHeight="50.0" fitWidth="50.0" layoutX="110.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="30.0">
+         <image>
+            <Image url="/images/heart.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="scoring" layoutX="811.0" layoutY="36.0" prefHeight="44.0" prefWidth="250.0" textFill="WHITE" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="pauseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="354.0" layoutY="271.0" prefHeight="178.0" prefWidth="465.0" text="PAUSED" textFill="RED" visible="false">
+         <font>
+            <Font size="68.0" />
+         </font>
+      </Label>
+      <Label fx:id="pauseLabel2" layoutX="397.0" layoutY="408.0" text="Press P to continue" textFill="RED" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
